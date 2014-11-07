@@ -117,8 +117,10 @@
 
 - (NSURL *)applicationDocumentsDirectory {
     if (_applicationDocumentsDirectory != nil) return _applicationDocumentsDirectory;
-    return [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory
-                                                   inDomains:NSUserDomainMask] lastObject];
+    
+    _applicationDocumentsDirectory = [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory
+                                                                             inDomains:NSUserDomainMask] lastObject];
+    return _applicationDocumentsDirectory;
 }
 
 - (NSURL *)applicationSupportDirectory {
