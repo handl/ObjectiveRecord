@@ -28,6 +28,7 @@
 @synthesize persistentStoreCoordinator = _persistentStoreCoordinator;
 @synthesize databaseName = _databaseName;
 @synthesize modelName = _modelName;
+@synthesize applicationDocumentsDirectory = _applicationDocumentsDirectory;
 
 
 + (id)instance {
@@ -115,7 +116,9 @@
 #pragma mark - SQLite file directory
 
 - (NSURL *)applicationDocumentsDirectory {
-    return [[NSFileManager defaultManager] containerURLForSecurityApplicationGroupIdentifier:@"group.HandleContainer"];
+    if (_applicationDocumentsDirectory != nil) return _applicationDocumentsDirectory;
+    return [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory
+                                                   inDomains:NSUserDomainMask] lastObject];
 }
 
 - (NSURL *)applicationSupportDirectory {
