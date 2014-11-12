@@ -35,6 +35,8 @@
  */
 + (NSManagedObjectContext *)defaultContext;
 
+- (void)saveOrDie;
+
 @end
 
 @interface NSManagedObject (ActiveRecord)
@@ -43,6 +45,7 @@
 #pragma mark - Default Context
 
 - (BOOL)save;
+- (void)saveOrDie;
 - (void)delete;
 + (void)deleteAll;
 

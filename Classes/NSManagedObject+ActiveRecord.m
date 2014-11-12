@@ -29,6 +29,13 @@
     return [[CoreDataManager sharedManager] managedObjectContext];
 }
 
+- (void)saveOrDie {
+    NSError *error = nil;
+    BOOL save = [self save:&error];
+
+    NSAssert(save && !error, @"Unresolved error in saving context.\n%@", error);
+}
+
 @end
 
 @implementation NSObject(null)
@@ -183,6 +190,16 @@
 
 - (BOOL)save {
     return [self saveTheContext];
+}
+
+- (void)saveOrDie {
+    if (self.managedObjectContext == nil ||
+        ![self.managedObjectContext hasChanges]) return;
+
+    NSError *error = nil;
+    BOOL save = [self.managedObjectContext save:&error];
+
+    NSAssert(save && !error, @"Unresolved error in saving context for entity:\n%@!\nError: %@", self, error);
 }
 
 - (void)delete {
